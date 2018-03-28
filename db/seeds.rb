@@ -3,5 +3,5 @@
 #
 # Examples:
 #
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+#   movies = Movie.edit([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
+#   Character.edit(name: 'Luke', movie: movies.first)
