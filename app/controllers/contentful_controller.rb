@@ -3,19 +3,24 @@ class ContentfulController < ApplicationController
   include ApplicationHelper
 
   def show
-    content_types = contentful_management.content_types.find('course')
-    entry = contentful_management.entries.find('1toEOumnkEksWakieoeC6M')
     @entry = entry
   end
 
   def edit
-    content_types = contentful_management.content_types.find('course')
-    entry = contentful_management.entries.find('1toEOumnkEksWakieoeC6M')
     @entry = entry
   end
 
   def update
-    flash[:notice] = "message"
-    redirect_to contentful_edit_path
+
+    puts "UPDATE RESPONSE #{entry.update(title: params[:Title], description: params[:Description])}"
+
+    flash[:notice] = "successfully updated"
+
+    redirect_to contentful_show_path
+  end
+  private
+  def entry
+    content_types = contentful_management.content_types.find('course')
+    entry = contentful_management.entries.find('1toEOumnkEksWakieoeC6M')
   end
 end
