@@ -1,4 +1,23 @@
-
-
-
-
+<h1 id="title"></h1>
+<p id="description"></p>
+<script type="text/javascript" charset="utf-8">
+    client.getEntry('1toEOumnkEksWakieoeC6M')
+        .then(function (entry){
+            $("#title").text(entry.fields.title);
+            $("#description").html(marked(entry.fields.description));
+            console.log("Title: " + entry.fields.title)
+            console.log("Description: " + entry.fields.description)
+        })
+    client.getEntries({
+        'content_type' : 'course'
+    })
+        .then(function (entries) {
+            // log the title for all the entries that have it
+            console.log("--- All entries of type course ---")
+            entries.items.forEach(function (entry) {
+                if(entry.fields.title) {
+                    console.log(entry.fields.title)
+                }
+            })
+        })
+</script>
