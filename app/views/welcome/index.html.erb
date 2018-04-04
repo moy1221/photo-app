@@ -1,9 +1,70 @@
+<strong>Retrieving data from a single entry</strong>
 <h1 id="title"></h1>
+<br>
 <p id="description"></p>
-<script type="text/javascript" charset="utf-8">
+<br>
+<hr>
+<strong>Retrieving entries from a content type </strong>
+<div id="list"></div>
+<% if current_user %>
+  <h3>Welcome: <%= current_user.email %></h3>
+<% else %>
+  <div class="jumbotron">
+    <h2>Welcome to the Photo Management App!</h2>
+    <p class="lead">
+      You'll love managing your Photos with our application. Sign up!
+    </p>
+  </div>
+
+  <div class="row">
+    <div class="plans clearfix">
+      <div class="col-lg-3 col-lg-offset-3 plan">
+        <h2>Premium Plan</h2>
+        <div class="price pull-right">
+          Price: $10
+        </div>
+        <div class="features">
+          <ul>
+            <li>Unlimited Image Uploads</li>
+            <li>Responsive design</li>
+            <li>Access anywhere</li>
+          </ul>
+        </div>
+        <p>
+          <%= link_to 'Sign Up', new_user_registration_path, class: 'btn btn-primary sign-up' %>
+        </p>
+      </div>
+      <div class="col-lg-3 plan">
+        <h2>Amaze Plan</h2>
+        <div class="price pull-right">
+          Price: $20
+        </div>
+        <div class="features">
+          <ul>
+            <li>Unlimited Image Uploads</li>
+            <li>Responsive design</li>
+            <li>Access anywhere</li>
+            <li class='extra'>Unlimited projects</li>
+          </ul>
+        </div>
+        <p>
+          <%= link_to 'Sign Up', new_user_registration_path, class: 'btn btn-primary sign-up' %>
+        </p>
+      </div>
+    </div>
+  </div>
+<% end %>
+<%= javascript_tag do %>
+    const client = contentful.createClient({
+        // This is the space ID. A space is like a project folder in Contentful terms
+        space: "<%= ENV['CONTENTFUL_SPACE_ID'] %>",
+        // This is the access token for this space. Normally you get both ID and the token in the Contentful web app
+        accessToken: "<%= ENV['CONTENTFUL_ACCESS_TOKEN'] %>"
+    })
     client.getEntry('1toEOumnkEksWakieoeC6M')
         .then(function (entry){
             $("#title").text(entry.fields.title);
+            $("#title").after("<small> Id: "+entry.sys.id+"</small><br>");
             $("#description").html(marked(entry.fields.description));
             console.log("Title: " + entry.fields.title)
             console.log("Description: " + entry.fields.description)
@@ -16,8 +77,12 @@
             console.log("--- All entries of type course ---")
             entries.items.forEach(function (entry) {
                 if(entry.fields.title) {
+                    $("#list").append("<h1>"+entry.fields.title+"</h1><br>");
+                    $("#list").append("<small> Id: "+entry.sys.id+"</small><br>");
+                    $("#list").append("<p>"+marked(entry.fields.description)+"</p><br>");
                     console.log(entry.fields.title)
                 }
             })
+
         })
-</script>
+<% end %>
