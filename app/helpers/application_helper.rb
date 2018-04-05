@@ -14,4 +14,8 @@ module ApplicationHelper
     Contentful::Management::Space.find(@client, ENV['CONTENTFUL_SPACE_ID'])
   end
 
+  def markdown text
+    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML).render(text).html_safe
+  end
+
 end

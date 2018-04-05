@@ -3,7 +3,7 @@ class ContentfulController < ApplicationController
   include ApplicationHelper
 
   def show
-    @entry = entry
+    #@entry = entry
   end
 
   def edit
@@ -12,7 +12,8 @@ class ContentfulController < ApplicationController
 
   def update
 
-    puts "UPDATE RESPONSE #{entry.update(title: params[:Title], description: params[:Description])}"
+    entry.update(title: params[:Title], description: params[:Description])
+    entry.publish
 
     flash[:notice] = "successfully updated"
 
