@@ -1,13 +1,17 @@
-<% categories = contentful.entries(content_type: ENV['CONTENTFUL_COURSE_ID']) %>
-<% categories.each do |entry| %>
-  <div class="contentful_product">
-    <h1><%= entry.fields[:title] %></h1>
-    <%= markdown(entry.fields[:description]) %>
-    <img src="<%= entry.image.image_url %>" height="300" width="400" />
-    <hr>
+<div class="row">
+  <div class="col-sm-2"></div>
+  <div class="col-md-8">
+    <h1 align="center"><%= @entry.fields[:title] %></h1>
+    <% @entry.categories.each do |category| %>
+      <h4>Tags: <span class="label label-primary">
+           <%= category.fields[:title]  %>
+          </span></h4>
+    <% end %>
+    <%= markdown @entry.fields[:description] %>
+    <img src="<%= @entry.image.image_url %>" class="img">
+    <br><br>
+    <%= link_to "Edit", contentful_edit_path(:id => @entry.id), class: 'btn btn-success' %>
+    <%= link_to "Back", contentful_index_path, class: 'btn btn-primary pull-right' %>
   </div>
-<% end %>
-
-<h1><%#= @entry.title %></h1>
-<p><%#= @entry.description %></p>
-<%#= link_to 'Edit', contentful_edit_path, class: "btn btn-primary" %>
+  <div class="col-md-2"></div>
+</div>

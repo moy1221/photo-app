@@ -1,0 +1,28 @@
+<div class="jumbotron">
+  <div class="container">
+    <h1>Articles</h1>
+    <p>Some articles</p>
+  </div>
+</div>
+<% categories = contentful.entries(content_type: ENV['CONTENTFUL_COURSE_ID']) %>
+<div class="container-fluid bg-3 text-center">
+  <h3>Some articles</h3><br>
+    <% categories.each do |entry| %>
+    <div class="col-sm-6 panel panel-default">
+      <img src="<%= entry.image.image_url %>" class="index-img" width="375" height="195">
+      <p class="center"> <%= link_to entry.fields[:title], contentful_show_path(:id => entry.id) %> </p>
+      <% entry.categories.each do |category| %>
+        <h5>Tags: <span class="label label-primary">
+           <%= category.fields[:title]  %>
+          </span></h5>
+      <% end %>
+      <p><%= entry.fields[:short_description] %></p>
+    </div>
+    <% end %>
+</div><br>
+
+<%#= markdown(entry.fields[:description]) %>
+
+<h1><%#= @entry.title %></h1>
+<p><%#= @entry.description %></p>
+<%#= link_to 'Edit', contentful_edit_path, class: "btn btn-primary" %>
